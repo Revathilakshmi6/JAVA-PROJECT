@@ -194,10 +194,12 @@ export default function App() {
       const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
       return `${protocol}://${window.location.host}/ws/websocket`;
     };
+    // Hardcoded fallback: always use Render backend for WebSocket if on Vercel
+    const hardcodedStompUrl = 'wss://java-project-yidh.onrender.com/ws/websocket';
 
     const stompUrl = getStompUrl();
     const client = new Client({
-      brokerURL: stompUrl,
+      brokerURL: hardcodedStompUrl,
       reconnectDelay: 5000,
       heartbeatIncoming: 4000,
       heartbeatOutgoing: 4000,
