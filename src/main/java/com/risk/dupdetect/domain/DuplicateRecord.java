@@ -35,7 +35,7 @@ public class DuplicateRecord {
     @Enumerated(EnumType.STRING)
     private MatchTier matchTier;
 
-    @org.hibernate.annotations.JdbcTypeCode(org.hibernate.type.SqlTypes.JSON)
+    @Convert(converter = com.risk.dupdetect.converter.StringListConverter.class)
     @Column(name = "matched_fields", columnDefinition = "TEXT")
     private List<String> matchedFields;
 
