@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS transaction (
     amount          NUMERIC(19,2) NOT NULL,
     currency        CHAR(3) NOT NULL,
     idempotency_ref VARCHAR(128),
+    channel         VARCHAR(64),
     status          VARCHAR(20) NOT NULL,   -- POSTED | SUPPRESSED | FLAGGED
     created_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
@@ -16,7 +17,7 @@ CREATE TABLE IF NOT EXISTS duplicate_record (
     original_txn_id     UUID NOT NULL REFERENCES transaction(id),
     duplicate_txn_id    UUID NOT NULL REFERENCES transaction(id),
     match_tier          VARCHAR(20) NOT NULL,  -- EXACT | PROBABLE
-    matched_fields      TEXT ARRAY,
+    matched_fields      TEXT,                  -- JSON array stored as text
     time_delta_ms       BIGINT NOT NULL,
     resolution          VARCHAR(20) NOT NULL DEFAULT 'PENDING', -- PENDING | APPROVED | REJECTED
     resolved_by         VARCHAR(64),
@@ -25,3 +26,4 @@ CREATE TABLE IF NOT EXISTS duplicate_record (
 );
 
 CREATE INDEX IF NOT EXISTS idx_txn_window ON transaction (payer_id, payee_id, amount, created_at);
+

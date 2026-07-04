@@ -40,6 +40,10 @@ public class Transaction {
     @Column(name = "idempotency_ref", length = 128)
     private String idempotencyRef;
 
+    @Column(name = "channel", length = 64)
+    private String channel;
+
+
     @Column(name = "status", nullable = false, length = 20)
     @Enumerated(EnumType.STRING)
     private TransactionStatus status;

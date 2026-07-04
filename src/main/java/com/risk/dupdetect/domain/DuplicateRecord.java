@@ -35,8 +35,8 @@ public class DuplicateRecord {
     @Enumerated(EnumType.STRING)
     private MatchTier matchTier;
 
-    @org.hibernate.annotations.JdbcTypeCode(org.hibernate.type.SqlTypes.ARRAY)
-    @Column(name = "matched_fields")
+    @org.hibernate.annotations.JdbcTypeCode(org.hibernate.type.SqlTypes.JSON)
+    @Column(name = "matched_fields", columnDefinition = "TEXT")
     private List<String> matchedFields;
 
     @Column(name = "time_delta_ms", nullable = false)
